@@ -20,10 +20,10 @@ class CreateServiceordersTable extends Migration
           $table->integer('RorS',false,true);
           $table->integer('Hotel',false,true);
           $table->String('dep',30);
-          $table->integer('dateTime',false,true);
+          $table->bigInteger('dateTime',false,true);
           $table->String('orderText');
           $table->integer('status',false,true);
-          $table->integer('responseDateTime',false,true);
+          $table->bigInteger('responseDateTime',false,true);
           $table->integer('responseEmployee',false,true);
           $table->timestamps();
         });

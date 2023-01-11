@@ -10,4 +10,7 @@ use Illuminate\Routing\Controller as BaseController;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+    public $firebaseUrl = 'https://hotelservices-ebe66.firebaseio.com';
+    public $projectName = 'Test';
 }

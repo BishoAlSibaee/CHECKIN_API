@@ -83,6 +83,15 @@ class roomsManagement extends Controller
         $floor = $request->input('Floor');
         $floorId = $request->input('FloorId');
         $insertedRooms = array();
+        if (Floor::find($floorId) == null) {
+          $result = ['result'=>'failed','insertedRow'=>null,'error'=>'this floor id '.$floorId.' is unavailable'];
+          return $result;
+        }
+        $F = Floor::find($floorId);
+        if ($F->building_id != $building_id) {
+          $result = ['result'=>'failed','insertedRow'=>null,'error'=>'building id '.$building_id.' does not match floor '.$floor.' !.. floor '.$floor.' building id is '.$F->building_id];
+          return $result;
+        }
         $rrr = Room::where('Building','=',$building)->where('RoomNumber','=',$startRoom)->first();
         if ($rrr == null) {
           DB::beginTransaction();
@@ -376,7 +385,6 @@ class roomsManagement extends Controller
       $room->Floor = $floor;
       $room->floor_id = $floorId;
       $room->save();
-
       return $room ; //Room::create(['RoomNumber'=>$RoomNumber,'hotel'=>1,'Building'=>$building,'building_id'=>$building_id,'Floor'=>$floor,'floor_id'=>$floorId]);
     }
 
@@ -412,6 +420,7 @@ class roomsManagement extends Controller
         'MiniBarCheck'=> 0,
         'Facility'=> '',
         'SOS'=> 0,
+        'DND'=>0,
         'PowerSwitch'=> 0,
         'DoorSensor'=> 0,
         'MotionSensor'=> 0,
