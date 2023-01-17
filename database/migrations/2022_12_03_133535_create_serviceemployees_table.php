@@ -23,6 +23,8 @@ class CreateServiceemployeesTable extends Migration
           $table->integer('mobile',false,true);
           $table->string('token')->default('0');
           $table->string('mytoken');
+          $table->string('control')->default('all');
+          $table->integer('logedin')->default(0);
           $table->timestamps();
         });
     }
