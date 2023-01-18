@@ -32,7 +32,6 @@ class Reservations extends Controller
         add functions  
     */
     public static function addClient(Request $request) {
-
       $validator = Validator::make($request->all(),[
         'first_name' => 'required|max:50|min:2',
         'last_name' => 'required|max:50|min:2',
@@ -1576,6 +1575,142 @@ class Reservations extends Controller
       return ['result'=>'success','reservations'=>$reservations,'error'=>''];
     }
 
+    public function getOpenCleanupOrders(Request $request) {
+      $validator = Validator::make($request->all(),[
+        'my_token' => 'required'
+      ]);
+      if ($validator->fails())  {
+        return ['result'=>'failed','orders'=>'','error'=>$validator->errors()];
+      }
+      if (Users::checkAuth($request->input('my_token')) == false) {
+        return ['result'=>'failed','orders'=>'','error'=>'you are unauthorized user'];
+      }
+      $serviceorders = Serviceorder::where('dep','Cleanup')->where('status',0)->get();
+      if ($serviceorders == null) {
+        return ['result'=>'failed','orders'=>'','error'=>'unable to get orders from DB'];
+      }
+      return ['result'=>'success','orders'=>$serviceorders,'error'=>''];
+    }
+
+    public function getOpenCleanupOrdersCount(Request $request) {
+      $validator = Validator::make($request->all(),[
+        'my_token' => 'required'
+      ]);
+      if ($validator->fails())  {
+        return ['result'=>'failed','orders'=>'','error'=>$validator->errors()];
+      }
+      if (Users::checkAuth($request->input('my_token')) == false) {
+        return ['result'=>'failed','orders'=>'','error'=>'you are unauthorized user'];
+      }
+      $serviceorders = Serviceorder::where('dep','Cleanup')->where('status',0)->get();
+      if ($serviceorders == null) {
+        return ['result'=>'failed','orders'=>'','error'=>'unable to get orders from DB'];
+      }
+      return ['result'=>'success','count'=>count($serviceorders),'error'=>''];
+    }
+
+    public function getOpenLaundryOrders(Request $request) {
+      $validator = Validator::make($request->all(),[
+        'my_token' => 'required'
+      ]);
+      if ($validator->fails())  {
+        return ['result'=>'failed','orders'=>'','error'=>$validator->errors()];
+      }
+      if (Users::checkAuth($request->input('my_token')) == false) {
+        return ['result'=>'failed','orders'=>'','error'=>'you are unauthorized user'];
+      }
+      $serviceorders = Serviceorder::where('dep','Laundry')->where('status',0)->get();
+      if ($serviceorders == null) {
+        return ['result'=>'failed','orders'=>'','error'=>'unable to get orders from DB'];
+      }
+      return ['result'=>'success','orders'=>$serviceorders,'error'=>''];
+    }
+
+    public function getOpenLaundryOrdersCount(Request $request) {
+      $validator = Validator::make($request->all(),[
+        'my_token' => 'required'
+      ]);
+      if ($validator->fails())  {
+        return ['result'=>'failed','orders'=>'','error'=>$validator->errors()];
+      }
+      if (Users::checkAuth($request->input('my_token')) == false) {
+        return ['result'=>'failed','orders'=>'','error'=>'you are unauthorized user'];
+      }
+      $serviceorders = Serviceorder::where('dep','Laundry')->where('status',0)->get();
+      if ($serviceorders == null) {
+        return ['result'=>'failed','orders'=>'','error'=>'unable to get orders from DB'];
+      }
+      return ['result'=>'success','count'=>count($serviceorders),'error'=>''];
+    }
+
+    public function getOpenRoomServiceOrders(Request $request) {
+      $validator = Validator::make($request->all(),[
+        'my_token' => 'required'
+      ]);
+      if ($validator->fails())  {
+        return ['result'=>'failed','orders'=>'','error'=>$validator->errors()];
+      }
+      if (Users::checkAuth($request->input('my_token')) == false) {
+        return ['result'=>'failed','orders'=>'','error'=>'you are unauthorized user'];
+      }
+      $serviceorders = Serviceorder::where('dep','RoomService')->where('status',0)->get();
+      if ($serviceorders == null) {
+        return ['result'=>'failed','orders'=>'','error'=>'unable to get orders from DB'];
+      }
+      return ['result'=>'success','orders'=>$serviceorders,'error'=>''];
+    }
+
+    public function getOpenRoomServiceOrdersCount(Request $request) {
+      $validator = Validator::make($request->all(),[
+        'my_token' => 'required'
+      ]);
+      if ($validator->fails())  {
+        return ['result'=>'failed','orders'=>'','error'=>$validator->errors()];
+      }
+      if (Users::checkAuth($request->input('my_token')) == false) {
+        return ['result'=>'failed','orders'=>'','error'=>'you are unauthorized user'];
+      }
+      $serviceorders = Serviceorder::where('dep','RoomService')->where('status',0)->get();
+      if ($serviceorders == null) {
+        return ['result'=>'failed','orders'=>'','error'=>'unable to get orders from DB'];
+      }
+      return ['result'=>'success','count'=>count($serviceorders),'error'=>''];
+    }
+
+    public function getOpenCheckoutOrders(Request $request) {
+      $validator = Validator::make($request->all(),[
+        'my_token' => 'required'
+      ]);
+      if ($validator->fails())  {
+        return ['result'=>'failed','orders'=>'','error'=>$validator->errors()];
+      }
+      if (Users::checkAuth($request->input('my_token')) == false) {
+        return ['result'=>'failed','orders'=>'','error'=>'you are unauthorized user'];
+      }
+      $serviceorders = Serviceorder::where('dep','Checkout')->where('status',0)->get();
+      if ($serviceorders == null) {
+        return ['result'=>'failed','orders'=>'','error'=>'unable to get orders from DB'];
+      }
+      return ['result'=>'success','orders'=>$serviceorders,'error'=>''];
+    }
+
+    public function getOpenCheckoutOrdersCount(Request $request) {
+      $validator = Validator::make($request->all(),[
+        'my_token' => 'required'
+      ]);
+      if ($validator->fails())  {
+        return ['result'=>'failed','orders'=>'','error'=>$validator->errors()];
+      }
+      if (Users::checkAuth($request->input('my_token')) == false) {
+        return ['result'=>'failed','orders'=>'','error'=>'you are unauthorized user'];
+      }
+      $serviceorders = Serviceorder::where('dep','Checkout')->where('status',0)->get();
+      if ($serviceorders == null) {
+        return ['result'=>'failed','orders'=>'','error'=>'unable to get orders from DB'];
+      }
+      return ['result'=>'success','count'=>count($serviceorders),'error'=>''];
+    }
+
     /* 
         set functions
     */
@@ -1938,39 +2073,64 @@ class Reservations extends Controller
         'my_token' => 'required'
       ]);
       if ($validator->fails())  {
-        $result = ['result'=>'failed','room'=>null,'error'=>$validator->errors()];
-        return $result ;
+        return ['result'=>'failed','room'=>'','error'=>$validator->errors()];
       }
-      if (Users::checkAuth($request->input('my_token'))) {
+      if (! Users::checkAuth($request->input('my_token'))) {
+        return ['result'=>'failed','reservation'=>'','error'=>'you are unauthorized user'];
+      }
         $room = Room::find($request->input('room_id'));
         if ($room == null) {
-          $result = ['result'=>'failed', 'room' => null ,'error'=>'no sutch room number ' ];
-          return $result;
+          return ['result'=>'failed', 'room' =>'' ,'error'=>'no sutch room number ' ];
         }
         $resp = $this->sendOrderToRoom($room->token,'poweron',$room->RoomNumber);
         if ($resp['success'] == 1) {
-          $result = ['result'=>'success','error'=>null];
-          return $result;
+          return ['result'=>'success','error'=>''];
         }
         else {
           $token = $this->getRoomToken($room);
           $rr = $this->sendOrderToRoom($token,'poweron',$room->RoomNumber);
           if ($rr['success'] == 1){
-            $result = ['result'=>'success','error'=>null];
-            return $result;
+            return ['result'=>'success','error'=>null];
           }
           else {
             $rere = $rr['results'];
             $error = $rere[0]['error'];
-            $result = ['result'=>'failed','error'=>'sending order failed "'.$error.'"'];
-            return $result;
+            return ['result'=>'failed','error'=>'sending order failed "'.$error.'"'];
           }
         }
+    }
+
+    public function powerByCardRoom(Request $request) {
+      $validator = Validator::make($request->all(),[
+        'room_id' => 'required|numeric',
+        'my_token' => 'required'
+      ]);
+      if ($validator->fails())  {
+        return ['result'=>'failed','room'=>'','error'=>$validator->errors()];
+      }
+      if (Users::checkAuth($request->input('my_token')) == false) {
+        return ['result'=>'failed','reservation'=>'','error'=>'you are unauthorized user'];
+      }
+      $room = Room::find($request->input('room_id'));
+      if ($room == null) {
+        return ['result'=>'failed', 'room' =>'' ,'error'=>'no sutch room number ' ];
+      }
+      $resp = $this->sendOrderToRoom($room->token,'bycard',$room->RoomNumber);
+      if ($resp['success'] == 1) {
+        return ['result'=>'success','error'=>''];
       }
       else {
-        $result = ['result'=>'failed','reservation'=>null,'error'=>'you are unauthorized user'];
-        return $result ;
-      }
+          $token = $this->getRoomToken($room);
+          $rr = $this->sendOrderToRoom($token,'bycard',$room->RoomNumber);
+          if ($rr['success'] == 1) {
+            return ['result'=>'success','error'=>''];
+          } 
+          else {
+            $rere = $rr['results'];
+            $error = $rere[0]['error'];
+            return ['result'=>'failed','error'=>'sending order failed "'.$error.'"'];
+          }
+        }
     }
 
     public function poweroffRoom(Request $request) {
@@ -1979,36 +2139,28 @@ class Reservations extends Controller
         'my_token' => 'required'
       ]);
       if ($validator->fails())  {
-        $result = ['result'=>'failed','room'=>null,'error'=>$validator->errors()];
-        return $result ;
+        return ['result'=>'failed','room'=>null,'error'=>$validator->errors()];
       }
-      if (Users::checkAuth($request->input('my_token'))) {
-        $room = Room::find($request->input('room_id'));
-        if ($room == null) {
-          $result = ['result'=>'failed', 'room' => null ,'error'=>'no sutch room number ' ];
-          return $result;
-        }
-        $resp = $this->sendOrderToRoom($room->token,'poweroff',$room->RoomNumber);
-        if ($resp['success'] == 1) {
-          $result = ['result'=>'success','error'=>null];
-          return $result;
-        }
-        else {
-          $token = $this->getRoomToken($room);
-          $rr = $this->sendOrderToRoom($token,'poweron',$room->RoomNumber);
-          if ($rr['success'] == 1){
-            $result = ['result'=>'success','error'=>null];
-            return $result;
-          }
-          else {
-            $result = ['result'=>'failed','error'=>'sending order failed '.$rr ];
-            return $result;
-          }
-        }
+      if (! Users::checkAuth($request->input('my_token'))) {
+        return ['result'=>'failed','reservation'=>null,'error'=>'you are unauthorized user'];
+      }
+      $room = Room::find($request->input('room_id'));
+      if ($room == null) {
+        return ['result'=>'failed', 'room' =>'' ,'error'=>'no sutch room number ' ];
+      }
+      $resp = $this->sendOrderToRoom($room->token,'poweroff',$room->RoomNumber);
+      if ($resp['success'] == 1) {
+        return ['result'=>'success','error'=>''];
       }
       else {
-        $result = ['result'=>'failed','reservation'=>null,'error'=>'you are unauthorized user'];
-        return $result ;
+        $token = $this->getRoomToken($room);
+        $rr = $this->sendOrderToRoom($token,'poweron',$room->RoomNumber);
+        if ($rr['success'] == 1) {
+          return ['result'=>'success','error'=>''];
+        }
+        else {
+          return ['result'=>'failed','error'=>'sending order failed '.$rr ];
+        }
       }
     }
 
@@ -2341,16 +2493,9 @@ class Reservations extends Controller
 
     public function checkoutSuiteInFirebase(Suite $suite) {
       $suites = [
-        'SuiteNumber' => $suite->SuiteNumber,
-        'Rooms' => $suite->Rooms,
-        'Hotel' => $suite->Hotel,
-        'Building' => $suite->Building,
-        'BuildingId' => $suite->BuildingId,
-        'Floor' => $suite->Floor,
-        'FloorId' =>$suite->FloorId,
         'Status' => 0,
       ];
-      $response = Http::retry(3,100)->put($this->firebaseUrl.'/'.$this->projectName.'/B'.$suite->Building.'/F'.$suite->Floor.'/S'.$suite->SuiteNumber.'.json',$suites);
+      $response = Http::retry(3,100)->patch($this->firebaseUrl.'/'.$this->projectName.'/B'.$suite->Building.'/F'.$suite->Floor.'/S'.$suite->SuiteNumber.'.json',$suites);
       return $response->successful();
     }
 
@@ -2411,6 +2556,7 @@ class Reservations extends Controller
 
     public function copyRoomFromDBToFirebase(Room $room) {
       $arrRoom = [
+        'id' => $room->id,
         'RoomNumber' => $room->RoomNumber,
         'Status'=> $room->Status,
         'hotel'=> $room->hotel,
@@ -2441,6 +2587,7 @@ class Reservations extends Controller
         'MotionSensor'=> $room->MotionSensor,
         'Thermostat'=> $room->Thermostat,
         'ZBGateway'=> $room->ZBGateway,
+        'online' => $room->online, 
         'CurtainSwitch'=> $room->CurtainSwitch,
         'ServiceSwitch'=> $room->ServiceSwitch,
         'lock'=> $room->lock,

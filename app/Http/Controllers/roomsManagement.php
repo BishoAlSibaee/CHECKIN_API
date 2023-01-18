@@ -517,6 +517,7 @@ class roomsManagement extends Controller
         'MotionSensor'=> 0,
         'Thermostat'=> 0,
         'ZBGateway'=> 0,
+        'online' =>0,
         'CurtainSwitch'=> 0,
         'ServiceSwitch'=> 0,
         'lock'=> 0,
